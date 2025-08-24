@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Натальная карта — Генератор</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+Symbols+2&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+	<header class="container">
+		<h1>Натальная карта</h1>
+		<p>Введите дату, время и место рождения — получайте изображение колеса с положением планет. Все расчёты выполняются в браузере.</p>
+	</header>
+
+	<main class="container">
+		<section class="card">
+			<form id="birth-form">
+				<div class="grid">
+					<label>
+						<span>Дата</span>
+						<input type="date" id="date" required>
+					</label>
+					<label>
+						<span>Время</span>
+						<input type="time" id="time" step="60" required>
+					</label>
+					<label>
+						<span>UTC сдвиг (часы)</span>
+						<input type="number" id="tz" step="0.25" placeholder="Напр. 3" value="3" required>
+					</label>
+					<label>
+						<span>Широта (°)</span>
+						<input type="number" id="lat" step="0.0001" placeholder="Напр. 55.7558" value="55.7558" required>
+					</label>
+					<label>
+						<span>Долгота (°, восток +)</span>
+						<input type="number" id="lon" step="0.0001" placeholder="Напр. 37.6176" value="37.6176" required>
+					</label>
+				</div>
+				<div class="actions">
+					<button type="submit">Построить карту</button>
+					<button type="button" id="download-png" disabled>Скачать PNG</button>
+				</div>
+			</form>
+		</section>
+
+		<section class="card">
+			<div id="chart"></div>
+		</section>
+	</main>
+
+	<footer class="container muted">
+		<p>Подсчёты выполняются с помощью библиотеки <a href="https://github.com/cosinekitty/astronomy" target="_blank" rel="noreferrer">Astronomy Engine</a>. Для точной астрологии используйте подтверждённое время рождения.</p>
+	</footer>
+
+	<script type="module" src="./src/app.js"></script>
+</body>
+</html>
+
