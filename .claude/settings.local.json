@@ -4,7 +4,8 @@
       "Bash(npx create-next-app:*)",
       "Bash(mkdir:*)",
       "Bash(chmod:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []

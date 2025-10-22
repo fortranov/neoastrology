@@ -39,6 +39,45 @@ git commit -m "Add package-lock.json"
 
 ---
 
+### ❌ Frontend: Cannot find module 'autoprefixer'
+
+**Ошибка:**
+```
+Failed to compile.
+app/layout.tsx
+An error occurred in `next/font`.
+Error: Cannot find module 'autoprefixer'
+```
+
+**Причина:** Отсутствует зависимость `autoprefixer` в devDependencies.
+
+**Решение:**
+
+```bash
+cd frontend
+
+# Установить autoprefixer
+npm install --save-dev autoprefixer
+
+# Или переустановить все зависимости
+npm install
+
+cd ..
+
+# Пересобрать frontend
+docker-compose build frontend
+```
+
+**Проверка:** Убедитесь, что в `frontend/package.json` есть:
+```json
+"devDependencies": {
+  "autoprefixer": "^10.4.20",
+  ...
+}
+```
+
+---
+
 ### ❌ Backend: ModuleNotFoundError
 
 **Ошибка:**

@@ -18,7 +18,7 @@ git clone <repository-url>
 cd astrology
 ```
 
-### 2. Сгенерируйте package-lock.json (ВАЖНО!)
+### 2. Установите frontend зависимости (ВАЖНО!)
 
 ```bash
 # ✅ Это обязательный шаг перед первой сборкой
@@ -26,13 +26,16 @@ cd frontend
 npm install
 cd ..
 
-# Теперь файл frontend/package-lock.json создан
+# Проверьте, что созданы:
+# - frontend/package-lock.json
+# - node_modules/autoprefixer
 ```
 
 **Почему это важно?**
 - Docker использует `npm ci` для установки зависимостей
 - `npm ci` требует наличие `package-lock.json`
-- Без этого файла frontend не соберется
+- Установит `autoprefixer` и другие dev-зависимости
+- Без этого frontend не соберется
 
 ### 3. Настройте environment variables
 

@@ -91,102 +91,102 @@ jobs:
           NEXT_PUBLIC_API_URL: http://localhost:8000
         run: npm run build
 
-  # Docker Build
-  docker-build:
-    name: Build Docker Images
-    runs-on: ubuntu-latest
-    needs: [backend-test, frontend-build]
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+  # Docker Build - DISABLED (uncomment to enable)
+  # docker-build:
+  #   name: Build Docker Images
+  #   runs-on: ubuntu-latest
+  #   needs: [backend-test, frontend-build]
+  #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+  #
+  #   permissions:
+  #     contents: read
+  #     packages: write
+  #
+  #   strategy:
+  #     matrix:
+  #       service: [frontend, backend]
+  #
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #
+  #     - name: Log in to Container Registry
+  #       uses: docker/login-action@v3
+  #       with:
+  #         registry: ${{ env.REGISTRY }}
+  #         username: ${{ github.actor }}
+  #         password: ${{ secrets.GITHUB_TOKEN }}
+  #
+  #     - name: Extract metadata
+  #       id: meta
+  #       uses: docker/metadata-action@v5
+  #       with:
+  #         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-${{ matrix.service }}
+  #         tags: |
+  #           type=ref,event=branch
+  #           type=ref,event=pr
+  #           type=semver,pattern={{version}}
+  #           type=semver,pattern={{major}}.{{minor}}
+  #           type=sha,prefix={{branch}}-
+  #
+  #     - name: Build and push Docker image
+  #       uses: docker/build-push-action@v5
+  #       with:
+  #         context: ./${{ matrix.service }}
+  #         push: true
+  #         tags: ${{ steps.meta.outputs.tags }}
+  #         labels: ${{ steps.meta.outputs.labels }}
+  #         cache-from: type=gha
+  #         cache-to: type=gha,mode=max
 
-    permissions:
-      contents: read
-      packages: write
+  # Deploy to staging - DISABLED
+  # deploy-staging:
+  #   name: Deploy to Staging
+  #   runs-on: ubuntu-latest
+  #   needs: docker-build
+  #   if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+  #   environment:
+  #     name: staging
+  #     url: https://staging.your-domain.com
+  #
+  #   steps:
+  #     - name: Deploy to staging server
+  #       uses: appleboy/ssh-action@master
+  #       with:
+  #         host: ${{ secrets.STAGING_HOST }}
+  #         username: ${{ secrets.STAGING_USER }}
+  #         key: ${{ secrets.STAGING_SSH_KEY }}
+  #         script: |
+  #           cd /var/www/astrology-staging
+  #           git pull origin develop
+  #           docker-compose pull
+  #           docker-compose up -d
+  #           docker-compose exec -T backend alembic upgrade head
 
-    strategy:
-      matrix:
-        service: [frontend, backend]
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Log in to Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-${{ matrix.service }}
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=sha,prefix={{branch}}-
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./${{ matrix.service }}
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-
-  # Deploy to staging
-  deploy-staging:
-    name: Deploy to Staging
-    runs-on: ubuntu-latest
-    needs: docker-build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-    environment:
-      name: staging
-      url: https://staging.your-domain.com
-
-    steps:
-      - name: Deploy to staging server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.STAGING_HOST }}
-          username: ${{ secrets.STAGING_USER }}
-          key: ${{ secrets.STAGING_SSH_KEY }}
-          script: |
-            cd /var/www/astrology-staging
-            git pull origin develop
-            docker-compose pull
-            docker-compose up -d
-            docker-compose exec -T backend alembic upgrade head
-
-  # Deploy to production
-  deploy-production:
-    name: Deploy to Production
-    runs-on: ubuntu-latest
-    needs: docker-build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    environment:
-      name: production
-      url: https://your-domain.com
-
-    steps:
-      - name: Deploy to production server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.PRODUCTION_HOST }}
-          username: ${{ secrets.PRODUCTION_USER }}
-          key: ${{ secrets.PRODUCTION_SSH_KEY }}
-          script: |
-            cd /var/www/astrology
-            git pull origin main
-            docker-compose pull
-            docker-compose up -d
-            docker-compose exec -T backend alembic upgrade head
-
-      - name: Notify deployment
-        if: success()
-        run: echo "Deployment successful!"
+  # Deploy to production - DISABLED
+  # deploy-production:
+  #   name: Deploy to Production
+  #   runs-on: ubuntu-latest
+  #   needs: docker-build
+  #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+  #   environment:
+  #     name: production
+  #     url: https://your-domain.com
+  #
+  #   steps:
+  #     - name: Deploy to production server
+  #       uses: appleboy/ssh-action@master
+  #       with:
+  #         host: ${{ secrets.PRODUCTION_HOST }}
+  #         username: ${{ secrets.PRODUCTION_USER }}
+  #         key: ${{ secrets.PRODUCTION_SSH_KEY }}
+  #         script: |
+  #           cd /var/www/astrology
+  #           git pull origin main
+  #           docker-compose pull
+  #           docker-compose up -d
+  #           docker-compose exec -T backend alembic upgrade head
+  #
+  #     - name: Notify deployment
+  #       if: success()
+  #       run: echo "Deployment successful!"
