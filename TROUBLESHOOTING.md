@@ -78,6 +78,36 @@ docker-compose build frontend
 
 ---
 
+### ❌ Frontend: "/app/public": not found
+
+**Ошибка:**
+```
+COPY --from=builder /app/public ./public
+"/app/public": not found
+```
+
+**Причина:** Отсутствует директория `public` в frontend.
+
+**Решение:**
+
+```bash
+# Создать директорию public
+mkdir -p frontend/public
+
+# Добавить .gitkeep чтобы Git отслеживал пустую директорию
+touch frontend/public/.gitkeep
+
+# Пересобрать
+docker-compose build frontend
+```
+
+**Альтернатива:** Dockerfile уже исправлен и создает директорию автоматически, просто пересоберите:
+```bash
+docker-compose build --no-cache frontend
+```
+
+---
+
 ### ❌ Backend: ModuleNotFoundError
 
 **Ошибка:**

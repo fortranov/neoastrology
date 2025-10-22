@@ -18,7 +18,14 @@ npm install
 cd ..
 ```
 
-### Проблема 3: Network not found
+### Проблема 3: "/app/public": not found
+
+```bash
+mkdir -p frontend/public
+touch frontend/public/.gitkeep
+```
+
+### Проблема 4: Network not found
 
 ```bash
 # Вариант A: Создать network
@@ -51,8 +58,11 @@ docker-compose logs -f
 ## 🎯 Полное решение (все проблемы разом)
 
 ```bash
-# 1. Установить зависимости
-cd frontend && npm install && cd ..
+# 1. Установить зависимости и создать директории
+cd frontend
+npm install
+cd ..
+mkdir -p frontend/public
 
 # 2. Создать network (если нужно)
 docker network create main-network 2>/dev/null || true
