@@ -95,23 +95,23 @@ services:
       - astrology_network
 
   # Nginx Reverse Proxy
-  nginx:
-    image: nginx:alpine
-    container_name: astrology_nginx
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./nginx/conf.d:/etc/nginx/conf.d:ro
-      - ./nginx/ssl:/etc/nginx/ssl:ro
-      - nginx_logs:/var/log/nginx
-    depends_on:
-      - frontend
-      - backend
-    networks:
-      - astrology_network
+#  nginx:
+#    image: nginx:alpine
+#    container_name: astrology_nginx
+#    restart: unless-stopped
+#    ports:
+#      - "80:80"
+#      - "443:443"
+#    volumes:
+#      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+#      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+#      - ./nginx/ssl:/etc/nginx/ssl:ro
+#      - nginx_logs:/var/log/nginx
+#    depends_on:
+#      - frontend
+#      - backend
+#    networks:
+#      - astrology_network
 
 volumes:
   postgres_data:
@@ -123,4 +123,6 @@ volumes:
 
 networks:
   astrology_network:
+    name: main-network
+    external: true
     driver: bridge
