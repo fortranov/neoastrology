@@ -290,6 +290,36 @@ make prod-deploy
 - **Kerykeion** (AGPL-3.0) - для коммерческого использования требуется лицензия €750
 - Альтернатива: использовать API сервисы (Prokerala, FreeAstrologyAPI)
 
+## 🔧 Troubleshooting
+
+Если возникли проблемы:
+
+1. **Проверьте логи**: `docker-compose logs -f`
+2. **Проверьте health**: `make health`
+3. **Смотрите**: [TROUBLESHOOTING.md](TROUBLESHOOTING.md) - полный гайд по решению проблем
+
+### Частые проблемы:
+
+**❌ npm ci requires package-lock.json**
+```bash
+cd frontend && npm install && cd ..
+docker-compose build frontend
+```
+
+**❌ Port already in use**
+```bash
+# Измените порт в docker-compose.yml или остановите процесс
+docker-compose down
+```
+
+**❌ Database connection refused**
+```bash
+docker-compose ps postgres  # Проверьте статус
+sleep 10 && docker-compose restart backend  # Подождите и перезапустите
+```
+
+Подробнее: [TROUBLESHOOTING.md](TROUBLESHOOTING.md)
+
 ## 🤝 Вклад в проект
 
 1. Fork проекта
