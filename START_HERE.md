@@ -28,8 +28,8 @@ make dev
 ### Шаг 3️⃣: Откройте в браузере
 
 - 🌐 Frontend: http://localhost:3000
-- 📚 API Docs: http://localhost:8000/docs
-- 🔧 Backend: http://localhost:8000
+- 📚 API Docs: http://localhost:8001/docs
+- 🔧 Backend: http://localhost:8001
 
 ---
 

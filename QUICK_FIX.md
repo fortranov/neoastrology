@@ -25,7 +25,11 @@ mkdir -p frontend/public
 touch frontend/public/.gitkeep
 ```
 
-### Проблема 4: Network not found
+### Проблема 4: Port 8000 already in use
+
+Порт изменен на 8001. Backend теперь на http://localhost:8001
+
+### Проблема 5: Network not found
 
 ```bash
 # Вариант A: Создать network
