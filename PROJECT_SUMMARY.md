@@ -215,7 +215,7 @@ GET    /api/v1/horoscopes/daily?sign=aries  # Daily horoscope
 GET    /api/v1/horoscopes/all-signs         # All signs
 ```
 
-**API Documentation**: http://localhost:8000/docs
+**API Documentation**: http://localhost:8001/docs
 
 ---
 

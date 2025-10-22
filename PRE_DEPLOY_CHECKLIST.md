@@ -137,15 +137,15 @@ docker-compose logs -f
 # Проверьте health
 make health
 # Или
-curl http://localhost:8000/health
-curl http://localhost:3000
+curl http://localhost:8001/health
+curl http://localhost:3001
 ```
 
 ### Доступ к сервисам
 
-- ✅ Frontend: http://localhost:3000
-- ✅ Backend API: http://localhost:8000
-- ✅ API Docs: http://localhost:8000/docs
+- ✅ Frontend: http://localhost:3001
+- ✅ Backend API: http://localhost:8001
+- ✅ API Docs: http://localhost:8001/docs
 - ✅ PostgreSQL: localhost:5432
 - ✅ Redis: localhost:6379
 
@@ -367,8 +367,8 @@ docker-compose restart backend frontend
 
 ```bash
 ✅ docker-compose ps показывает 4-5 UP сервисов
-✅ http://localhost:3000 открывается
-✅ http://localhost:8000/docs показывает API
+✅ http://localhost:3001 открывается
+✅ http://localhost:8001/docs показывает API
 ✅ Можно создать пользователя через API
 ✅ Можно создать натальную карту
 ✅ Логи без критических ошибок

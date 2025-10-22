@@ -27,7 +27,7 @@ make dev
 
 ### Шаг 3️⃣: Откройте в браузере
 
-- 🌐 Frontend: http://localhost:3000
+- 🌐 Frontend: http://localhost:3001
 - 📚 API Docs: http://localhost:8001/docs
 - 🔧 Backend: http://localhost:8001
 
@@ -95,8 +95,8 @@ docker network create main-network
 ## ✅ Что дальше?
 
 1. ✅ Запустите проект: `make dev`
-2. 🧪 Протестируйте API: http://localhost:8000/docs
-3. 🎨 Посмотрите landing: http://localhost:3000
+2. 🧪 Протестируйте API: http://localhost:8001/docs
+3. 🎨 Посмотрите landing: http://localhost:3001
 4. 🔧 Начните разработку!
 
 **Удачи!** 🎉

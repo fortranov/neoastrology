@@ -286,8 +286,8 @@ Access to fetch has been blocked by CORS policy
 
 Проверьте ALLOWED_ORIGINS в backend/.env:
 ```env
-FRONTEND_URL=http://localhost:3000
-ALLOWED_ORIGINS=["http://localhost:3000"]
+FRONTEND_URL=http://localhost:3001
+ALLOWED_ORIGINS=["http://localhost:3001"]
 ```
 
 И в backend/app/config.py убедитесь, что CORS настроен правильно.
@@ -315,7 +315,7 @@ cp .env.example .env
 # Минимально необходимые
 DATABASE_URL=postgresql+asyncpg://...
 SECRET_KEY=your-secret-key
-NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_API_URL=http://localhost:8001
 ```
 
 4. Перезапустите контейнеры:
@@ -365,7 +365,7 @@ docker-compose restart backend
 **2. Backend не отвечает:**
 ```bash
 # Проверьте health endpoint
-curl http://localhost:8000/health
+curl http://localhost:8001/health
 
 # Проверьте логи
 docker-compose logs -f backend
@@ -427,7 +427,7 @@ make health
 
 # Или вручную
 curl http://localhost/health
-curl http://localhost:8000/health
+curl http://localhost:8001/health
 docker-compose exec postgres pg_isready
 docker-compose exec redis redis-cli ping
 ```

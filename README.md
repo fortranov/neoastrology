@@ -65,9 +65,9 @@ make dev
 .\scripts\dev-start.ps1
 
 # Готово! 🎉
-# Frontend: http://localhost:3000
-# Backend: http://localhost:8000
-# API Docs: http://localhost:8000/docs
+# Frontend: http://localhost:3001
+# Backend: http://localhost:8001
+# API Docs: http://localhost:8001/docs
 ```
 
 Подробнее: [QUICKSTART.md](QUICKSTART.md)
@@ -100,8 +100,8 @@ alembic upgrade head
 uvicorn app.main:app --reload --port 8000
 ```
 
-API будет доступно на `http://localhost:8000`
-Документация: `http://localhost:8000/docs`
+API будет доступно на `http://localhost:8001`
+Документация: `http://localhost:8001/docs`
 
 #### Frontend
 
@@ -119,7 +119,7 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Приложение будет доступно на `http://localhost:3000`
+Приложение будет доступно на `http://localhost:3001`
 
 </details>
 
@@ -196,10 +196,10 @@ REDIS_URL=redis://localhost:6379
 
 #### Frontend (.env.local)
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_API_URL=http://localhost:8001
 NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
 NEXTAUTH_SECRET=your-secret
-NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_URL=http://localhost:3001
 ```
 
 ## 🐳 Docker команды

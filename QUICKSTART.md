@@ -40,20 +40,20 @@ docker-compose exec backend alembic upgrade head
 
 ### Шаг 3: Открыть приложение
 
-- **Frontend**: http://localhost:3000
-- **Backend API**: http://localhost:8000
-- **API Docs**: http://localhost:8000/docs
+- **Frontend**: http://localhost:3001
+- **Backend API**: http://localhost:8001
+- **API Docs**: http://localhost:8001/docs
 - **PostgreSQL**: localhost:5432
 - **Redis**: localhost:6379
 
 ### Шаг 4: Создать первого пользователя
 
-Откройте http://localhost:8000/docs и используйте endpoint `/api/v1/auth/register`
+Откройте http://localhost:8001/docs и используйте endpoint `/api/v1/auth/register`
 
 Или через curl:
 
 ```bash
-curl -X POST "http://localhost:8000/api/v1/auth/register" \
+curl -X POST "http://localhost:8001/api/v1/auth/register" \
   -H "Content-Type: application/json" \
   -d '{
     "email": "user@example.com",
@@ -137,7 +137,7 @@ POSTGRES_PASSWORD=dev_password
 SECRET_KEY=dev-secret-key-not-for-production
 DEBUG=True
 
-NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_API_URL=http://localhost:8001
 ```
 
 ### Production .env (обязательные поля)
@@ -230,14 +230,14 @@ docker-compose up -d frontend
 - [ ] `make dev` выполнен успешно
 - [ ] Все сервисы запущены (`make ps`)
 - [ ] Миграции применены (`make migrate`)
-- [ ] Frontend открывается на http://localhost:3000
-- [ ] Backend API доступен на http://localhost:8000
-- [ ] API документация открывается на http://localhost:8000/docs
+- [ ] Frontend открывается на http://localhost:3001
+- [ ] Backend API доступен на http://localhost:8001
+- [ ] API документация открывается на http://localhost:8001/docs
 - [ ] Создан тестовый пользователь
 
 ## 🎓 Следующие шаги
 
-1. **Изучите API**: http://localhost:8000/docs
+1. **Изучите API**: http://localhost:8001/docs
 2. **Создайте первую натальную карту**: `POST /api/v1/charts`
 3. **Настройте Stripe**: Добавьте тестовые ключи в `.env`
 4. **Настройте OpenAI**: Добавьте API ключ для AI интерпретаций

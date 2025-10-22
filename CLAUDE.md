@@ -146,7 +146,7 @@ make restore          # Restore database
 2. **Make changes** in `frontend/` or `backend/`
 3. **View logs**: `make logs` or `make logs service=backend`
 4. **Run migrations**: `make migrate` (after model changes)
-5. **Test**: Access http://localhost:8000/docs for API testing
+5. **Test**: Access http://localhost:8001/docs for API testing
 
 ## Important Notes for Future Development
 
