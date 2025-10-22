@@ -1,17 +1,88 @@
+'use client';
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
 import {
   Sparkles,
   Moon,
   Star,
   Heart,
   TrendingUp,
-  Zap
+  Zap,
+  LogIn,
+  UserPlus
 } from "lucide-react";
 
 export default function Home() {
+  const router = useRouter();
+  const { isAuthenticated, user, logout } = useAuth();
+
+  const handleGetStarted = () => {
+    if (isAuthenticated) {
+      router.push('/dashboard');
+    } else {
+      router.push('/register');
+    }
+  };
+
   return (
     <div className="min-h-screen">
+      {/* Navigation Header */}
+      <header className="absolute top-0 left-0 right-0 z-50 bg-transparent">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-8 h-8 text-purple-400" />
+              <span className="text-white font-bold text-xl">Астро Платформа</span>
+            </div>
+
+            <nav className="flex items-center gap-4">
+              {isAuthenticated ? (
+                <>
+                  <span className="text-purple-200 hidden sm:inline">
+                    {user?.email}
+                  </span>
+                  <Button
+                    onClick={() => router.push('/dashboard')}
+                    variant="outline"
+                    className="border-white/20 text-white hover:bg-white/10"
+                  >
+                    Личный кабинет
+                  </Button>
+                  <Button
+                    onClick={logout}
+                    variant="ghost"
+                    className="text-white hover:bg-white/10"
+                  >
+                    Выйти
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    onClick={() => router.push('/login')}
+                    variant="ghost"
+                    className="text-white hover:bg-white/10"
+                  >
+                    <LogIn className="w-4 h-4 mr-2" />
+                    Вход
+                  </Button>
+                  <Button
+                    onClick={() => router.push('/register')}
+                    className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
+                  >
+                    <UserPlus className="w-4 h-4 mr-2" />
+                    Регистрация
+                  </Button>
+                </>
+              )}
+            </nav>
+          </div>
+        </div>
+      </header>
+
       {/* Hero Section */}
       <section className="cosmic-bg star-field min-h-screen flex items-center justify-center relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-purple-900/20"></div>
@@ -30,11 +101,13 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/signup">
-              <Button size="lg" className="cosmic-gradient text-white text-lg px-8 py-6">
-                Создать карту бесплатно
-              </Button>
-            </Link>
+            <Button
+              onClick={handleGetStarted}
+              size="lg"
+              className="cosmic-gradient text-white text-lg px-8 py-6"
+            >
+              {isAuthenticated ? 'Перейти в личный кабинет' : 'Создать карту бесплатно'}
+            </Button>
             <Link href="/pricing">
               <Button size="lg" variant="outline" className="text-white border-white hover:bg-white/10 text-lg px-8 py-6">
                 Посмотреть тарифы
@@ -141,11 +214,13 @@ export default function Home() {
           <p className="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
             Присоединяйтесь к тысячам пользователей, открывающих тайны своей судьбы
           </p>
-          <Link href="/signup">
-            <Button size="lg" className="bg-white text-purple-600 hover:bg-gray-100 text-lg px-8 py-6">
-              Начать бесплатно
-            </Button>
-          </Link>
+          <Button
+            onClick={handleGetStarted}
+            size="lg"
+            className="bg-white text-purple-600 hover:bg-gray-100 text-lg px-8 py-6"
+          >
+            {isAuthenticated ? 'Перейти в личный кабинет' : 'Начать бесплатно'}
+          </Button>
         </div>
       </section>
 
