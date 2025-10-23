@@ -10,20 +10,23 @@ const TOKEN_KEY = 'astrology_token';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   // Load user from localStorage on mount
   useEffect(() => {
     const loadUser = async () => {
       try {
-        const token = localStorage.getItem(TOKEN_KEY);
-        if (token) {
-          const userData = await authAPI.getCurrentUser(token);
+        const storedToken = localStorage.getItem(TOKEN_KEY);
+        if (storedToken) {
+          setToken(storedToken);
+          const userData = await authAPI.getCurrentUser(storedToken);
           setUser(userData);
         }
       } catch (error) {
         console.error('Failed to load user:', error);
         localStorage.removeItem(TOKEN_KEY);
+        setToken(null);
       } finally {
         setIsLoading(false);
       }
@@ -36,6 +39,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const response = await authAPI.login(credentials);
       localStorage.setItem(TOKEN_KEY, response.access_token);
+      setToken(response.access_token);
       setUser(response.user);
     } catch (error) {
       throw error;
@@ -46,6 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const response = await authAPI.register(data);
       localStorage.setItem(TOKEN_KEY, response.access_token);
+      setToken(response.access_token);
       setUser(response.user);
     } catch (error) {
       throw error;
@@ -54,6 +59,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = () => {
     localStorage.removeItem(TOKEN_KEY);
+    setToken(null);
     setUser(null);
   };
 
@@ -72,6 +78,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const value: AuthContextType = {
     user,
+    token,
     isLoading,
     isAuthenticated: !!user,
     login,

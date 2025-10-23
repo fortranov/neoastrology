@@ -18,7 +18,8 @@
       "Bash(curl:*)",
       "Bash(ls -la \"D:\\projects\\astrology\\backend\\alembic\"\" 2>&1 || dir \"D:projectsastrologybackendalembic\"\")",
       "Bash(dir:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(npx tsc:*)"
     ],
     "deny": [],
     "ask": []
