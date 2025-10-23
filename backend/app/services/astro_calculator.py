@@ -1,6 +1,6 @@
 from typing import Dict, Any, Optional
 from datetime import datetime, date
-from kerykeion import AstrologicalSubject, KrInstance
+from kerykeion import AstrologicalSubject
 import logging
 
 logger = logging.getLogger(__name__)
