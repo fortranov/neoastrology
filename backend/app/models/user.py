@@ -7,7 +7,7 @@ import enum
 from ..database import Base
 
 
-class SubscriptionTier(enum.Enum):
+class SubscriptionTier(str, enum.Enum):
     FREE = "free"
     BASIC = "basic"
     PREMIUM = "premium"
