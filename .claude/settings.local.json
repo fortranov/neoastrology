@@ -17,7 +17,8 @@
       "WebFetch(domain:neoastrology.ru)",
       "Bash(curl:*)",
       "Bash(ls -la \"D:\\projects\\astrology\\backend\\alembic\"\" 2>&1 || dir \"D:projectsastrologybackendalembic\"\")",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(python:*)"
     ],
     "deny": [],
     "ask": []
