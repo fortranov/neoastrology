@@ -21,69 +21,86 @@ async def create_natal_chart(
     db: AsyncSession = Depends(get_db)
 ):
     """Create a new natal chart."""
-    # Check tier limits
-    if current_user.subscription_tier == SubscriptionTier.FREE:
-        # Count existing charts
-        result = await db.execute(
-            select(NatalChart).where(NatalChart.user_id == current_user.id)
-        )
-        existing_charts = result.scalars().all()
+    try:
+        # Check tier limits
+        if current_user.subscription_tier == SubscriptionTier.FREE:
+            # Count existing charts
+            result = await db.execute(
+                select(NatalChart).where(NatalChart.user_id == current_user.id)
+            )
+            existing_charts = result.scalars().all()
 
-        if len(existing_charts) >= 1:
+            if len(existing_charts) >= 1:
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail="Free tier allows only 1 natal chart. Upgrade to create more."
+                )
+
+        # Generate chart using astro calculator
+        try:
+            calculated_data = AstroCalculatorService.generate_natal_chart(
+                birth_date=chart_data.birth_date,
+                birth_time=chart_data.birth_time,
+                birth_latitude=chart_data.birth_latitude,
+                birth_longitude=chart_data.birth_longitude,
+                birth_city=chart_data.birth_city,
+                birth_timezone=chart_data.birth_timezone
+            )
+        except ValueError as e:
             raise HTTPException(
-                status_code=status.HTTP_403_FORBIDDEN,
-                detail="Free tier allows only 1 natal chart. Upgrade to create more."
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Ошибка расчета карты: {str(e)}"
             )
 
-    # Generate chart using astro calculator
-    try:
-        calculated_data = AstroCalculatorService.generate_natal_chart(
+        # Generate interpretation
+        use_llm = current_user.subscription_tier != SubscriptionTier.FREE
+        try:
+            interpretation = InterpretationEngine.interpret_natal_chart(
+                chart_data=calculated_data,
+                use_llm=use_llm,
+                user_tier=current_user.subscription_tier.value
+            )
+        except Exception as e:
+            # Fallback to basic interpretation if error
+            interpretation = f"Натальная карта создана. Интерпретация будет доступна позже."
+
+        # Generate SVG (placeholder for now)
+        svg_chart = AstroCalculatorService.generate_chart_svg(calculated_data)
+
+        # Create chart record
+        new_chart = NatalChart(
+            user_id=current_user.id,
+            name=chart_data.name,
             birth_date=chart_data.birth_date,
             birth_time=chart_data.birth_time,
+            birth_timezone=chart_data.birth_timezone,
             birth_latitude=chart_data.birth_latitude,
             birth_longitude=chart_data.birth_longitude,
             birth_city=chart_data.birth_city,
-            birth_timezone=chart_data.birth_timezone
+            birth_country=chart_data.birth_country,
+            chart_data=calculated_data,
+            interpretation_text=interpretation,
+            svg_chart=svg_chart,
+            is_primary=chart_data.is_primary
         )
-    except ValueError as e:
+
+        db.add(new_chart)
+        await db.commit()
+        await db.refresh(new_chart)
+
+        return NatalChartResponse.model_validate(new_chart)
+
+    except HTTPException:
+        # Re-raise HTTP exceptions
+        raise
+    except Exception as e:
+        # Catch all other exceptions
+        import traceback
+        traceback.print_exc()
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=str(e)
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Внутренняя ошибка сервера при создании карты: {str(e)}"
         )
-
-    # Generate interpretation
-    use_llm = current_user.subscription_tier != SubscriptionTier.FREE
-    interpretation = InterpretationEngine.interpret_natal_chart(
-        chart_data=calculated_data,
-        use_llm=use_llm,
-        user_tier=current_user.subscription_tier.value
-    )
-
-    # Generate SVG (placeholder for now)
-    svg_chart = AstroCalculatorService.generate_chart_svg(calculated_data)
-
-    # Create chart record
-    new_chart = NatalChart(
-        user_id=current_user.id,
-        name=chart_data.name,
-        birth_date=chart_data.birth_date,
-        birth_time=chart_data.birth_time,
-        birth_timezone=chart_data.birth_timezone,
-        birth_latitude=chart_data.birth_latitude,
-        birth_longitude=chart_data.birth_longitude,
-        birth_city=chart_data.birth_city,
-        birth_country=chart_data.birth_country,
-        chart_data=calculated_data,
-        interpretation_text=interpretation,
-        svg_chart=svg_chart,
-        is_primary=chart_data.is_primary
-    )
-
-    db.add(new_chart)
-    await db.commit()
-    await db.refresh(new_chart)
-
-    return NatalChartResponse.model_validate(new_chart)
 
 
 @router.get("", response_model=List[NatalChartResponse])

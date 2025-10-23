@@ -71,6 +71,9 @@ export default function NewNatalChartPage() {
         is_primary: formData.is_primary
       };
 
+      console.log('Sending request to:', `${apiUrl}/api/v1/charts`);
+      console.log('Payload:', payload);
+
       const response = await fetch(`${apiUrl}/api/v1/charts`, {
         method: 'POST',
         headers: {
@@ -80,14 +83,30 @@ export default function NewNatalChartPage() {
         body: JSON.stringify(payload)
       });
 
+      console.log('Response status:', response.status);
+      console.log('Response content-type:', response.headers.get('content-type'));
+
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || 'Не удалось создать натальную карту');
+        const contentType = response.headers.get('content-type');
+        let errorMessage = 'Не удалось создать натальную карту';
+
+        if (contentType && contentType.includes('application/json')) {
+          const errorData = await response.json();
+          errorMessage = errorData.detail || errorMessage;
+        } else {
+          const errorText = await response.text();
+          console.error('Non-JSON error response:', errorText);
+          errorMessage = `Ошибка сервера (${response.status}): ${errorText.substring(0, 100)}`;
+        }
+
+        throw new Error(errorMessage);
       }
 
       const chart = await response.json();
+      console.log('Chart created successfully:', chart.id);
       router.push(`/dashboard/charts/${chart.id}`);
     } catch (err) {
+      console.error('Error creating chart:', err);
       setError(err instanceof Error ? err.message : 'Произошла ошибка');
     } finally {
       setIsLoading(false);
