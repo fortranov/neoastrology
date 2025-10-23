@@ -88,7 +88,10 @@ export default function DashboardPage() {
 
           {/* Quick Actions */}
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6 hover:bg-white/15 transition-all cursor-pointer">
+            <div
+              onClick={() => router.push('/dashboard/charts')}
+              className="bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6 hover:bg-white/15 transition-all cursor-pointer"
+            >
               <div className="text-4xl mb-4">🌟</div>
               <h3 className="text-xl font-bold text-white mb-2">
                 Натальная карта
@@ -98,33 +101,33 @@ export default function DashboardPage() {
               </p>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6 hover:bg-white/15 transition-all cursor-pointer">
+            <div className="bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6 hover:bg-white/15 transition-all cursor-pointer opacity-50">
               <div className="text-4xl mb-4">📅</div>
               <h3 className="text-xl font-bold text-white mb-2">
                 Гороскоп на сегодня
               </h3>
               <p className="text-purple-200">
-                Узнайте, что говорят звезды сегодня
+                Скоро доступно
               </p>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6 hover:bg-white/15 transition-all cursor-pointer">
+            <div className="bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6 hover:bg-white/15 transition-all cursor-pointer opacity-50">
               <div className="text-4xl mb-4">💫</div>
               <h3 className="text-xl font-bold text-white mb-2">
                 Транзиты
               </h3>
               <p className="text-purple-200">
-                Посмотрите актуальные транзиты планет
+                Скоро доступно (Premium)
               </p>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6 hover:bg-white/15 transition-all cursor-pointer">
+            <div className="bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6 hover:bg-white/15 transition-all cursor-pointer opacity-50">
               <div className="text-4xl mb-4">❤️</div>
               <h3 className="text-xl font-bold text-white mb-2">
                 Совместимость
               </h3>
               <p className="text-purple-200">
-                Проверьте совместимость с партнером
+                Скоро доступно
               </p>
             </div>
           </div>

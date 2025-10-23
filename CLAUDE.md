@@ -98,24 +98,37 @@ The primary language is **Russian**. All user-facing content, interpretations, a
 - Docker containerization (frontend, backend, postgres, redis, nginx)
 - Database models and schemas (User, NatalChart, Subscription, HoroscopeCache)
 - Authentication system with JWT
-- Astrology calculation service using kerykeion
+- Astrology calculation service using kerykeion (with mock fallback)
 - Interpretation engine with template-based and LLM-ready logic
 - API endpoints for auth, charts, and horoscopes
 - Nginx reverse proxy with rate limiting
 - Docker Compose for dev and production
 - Deployment scripts (bash and PowerShell)
 - Makefile with all common commands
-- Complete documentation (README, QUICKSTART, DEPLOYMENT)
+- Complete documentation (README, QUICKSTART, DEPLOYMENT, NATAL_CHARTS_GUIDE)
+- **Full Natal Charts functionality:**
+  - Create natal chart page with complete form
+  - List all user charts page
+  - View individual chart page with tabs (planets, houses, aspects, interpretation)
+  - UI components (Input, Label, Card)
+  - Dashboard integration with navigation
+  - Delete chart functionality
+  - Tier-based restrictions (Free: 1 chart, Basic/Premium: unlimited)
+  - Planet positions in signs and houses
+  - 12 houses calculation
+  - Aspects calculation
+  - Russian language interpretations
 
 🔨 **To Complete:**
 - Stripe webhook endpoints for subscriptions
 - NextAuth.js full configuration on frontend
-- Dashboard UI components (forms, chart visualization)
 - OpenAI GPT-4 integration for premium interpretations
 - SVG chart generation using kerykeion
 - Full transit calculation implementation
+- Geocoding API integration for city search
 - Email notifications
 - Unit and integration tests
+- Export charts to PDF
 
 ## Docker Commands
 
