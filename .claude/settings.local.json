@@ -6,7 +6,18 @@
       "Bash(chmod:*)",
       "Bash(npm install:*)",
       "Bash(cat:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(docker-compose:*)",
+      "Bash(docker exec:*)",
+      "Bash(git add:*)",
+      "Bash(git log:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(python -m py_compile:*)",
+      "WebFetch(domain:neoastrology.ru)",
+      "Bash(curl:*)",
+      "Bash(ls -la \"D:\\projects\\astrology\\backend\\alembic\"\" 2>&1 || dir \"D:projectsastrologybackendalembic\"\")",
+      "Bash(dir:*)"
     ],
     "deny": [],
     "ask": []
