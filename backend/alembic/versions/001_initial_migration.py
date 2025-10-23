@@ -18,7 +18,7 @@ depends_on = None
 
 def upgrade() -> None:
     # Create subscription_tier enum type
-    subscription_tier_enum = postgresql.ENUM('free', 'basic', 'premium', name='subscriptiontier', create_type=True)
+    subscription_tier_enum = postgresql.ENUM('FREE', 'BASIC', 'PREMIUM', name='subscriptiontier', create_type=True)
     subscription_tier_enum.create(op.get_bind(), checkfirst=True)
 
     # Create users table
@@ -28,7 +28,7 @@ def upgrade() -> None:
         sa.Column('email', sa.String(length=255), nullable=False),
         sa.Column('hashed_password', sa.String(length=255), nullable=False),
         sa.Column('full_name', sa.String(length=255), nullable=True),
-        sa.Column('subscription_tier', subscription_tier_enum, nullable=False, server_default='free'),
+        sa.Column('subscription_tier', subscription_tier_enum, nullable=False, server_default='FREE'),
         sa.Column('subscription_end_date', sa.DateTime(), nullable=True),
         sa.Column('stripe_customer_id', sa.String(length=255), nullable=True),
         sa.Column('is_active', sa.Boolean(), nullable=False, server_default='true'),

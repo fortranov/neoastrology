@@ -8,9 +8,9 @@ from ..database import Base
 
 
 class SubscriptionTier(str, enum.Enum):
-    FREE = "free"
-    BASIC = "basic"
-    PREMIUM = "premium"
+    FREE = "FREE"
+    BASIC = "BASIC"
+    PREMIUM = "PREMIUM"
 
 
 class User(Base):
