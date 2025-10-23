@@ -148,19 +148,19 @@ export default function ChartsListPage() {
           ) : (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {charts.map((chart) => (
-                <Card key={chart.id} className="hover:bg-white/15 transition-all cursor-pointer">
+                <Card key={chart.id} className="hover:bg-slate-800/95 hover:border-purple-400/50 transition-all cursor-pointer hover:shadow-xl hover:shadow-purple-500/20">
                   <CardHeader>
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <CardTitle className="text-xl mb-1">
                           {chart.name}
                           {chart.is_primary && (
-                            <span className="ml-2 text-xs bg-purple-500/30 text-purple-200 px-2 py-1 rounded">
+                            <span className="ml-2 text-xs bg-purple-600/40 text-purple-200 px-2 py-1 rounded border border-purple-500/30">
                               Основная
                             </span>
                           )}
                         </CardTitle>
-                        <CardDescription>
+                        <CardDescription className="text-purple-300">
                           {new Date(chart.birth_date).toLocaleDateString('ru-RU', {
                             year: 'numeric',
                             month: 'long',
@@ -173,9 +173,9 @@ export default function ChartsListPage() {
                   <CardContent>
                     <div className="space-y-2 mb-4">
                       <p className="text-sm text-purple-200">
-                        <span className="font-semibold">Место:</span> {chart.birth_city}, {chart.birth_country}
+                        <span className="font-semibold text-purple-300">Место:</span> {chart.birth_city}, {chart.birth_country}
                       </p>
-                      <p className="text-xs text-purple-200/70">
+                      <p className="text-xs text-purple-300/70">
                         Создана: {new Date(chart.created_at).toLocaleDateString('ru-RU')}
                       </p>
                     </div>
@@ -192,7 +192,7 @@ export default function ChartsListPage() {
                           handleDelete(chart.id);
                         }}
                         variant="outline"
-                        className="border-red-500/30 text-red-300 hover:bg-red-500/20"
+                        className="border-red-500/40 text-red-300 hover:bg-red-500/20 hover:border-red-400"
                       >
                         Удалить
                       </Button>
